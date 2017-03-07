@@ -6,7 +6,7 @@ Classify Time-series/Sequential data using Neural Nets.
 ## Language: 
 Matlab
 ## Code: 
-
+https://github.com/AlberErre/TimeSeries_Classifier/blob/master/Feedforward_RNN.m
 ## Dataset: 
 https://archive.ics.uci.edu/ml/datasets/Activity+Recognition+from+Single+Chest-Mounted+Accelerometer
 
