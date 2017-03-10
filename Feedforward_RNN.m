@@ -75,5 +75,18 @@ y = net(x);
 perf = perform(net,y,t)
 end
 
+%% FEEDFORWARD NN (MINI BATCH) ---> "dnet"
+dnet = feedforwardnet(10,'trainscg'); %sgdm for stochastic! traingd is gradient decent function, backpropagation
+mini_batch_size = 15; 
+    % The "window" takes 15 inputs to train the net in every epoch
+number_of_epochs = 30;
+    % We have 1,520,606 examples, 
+    %if we aproximate to 1,500,000 /15 = 100,000 epochs to feed all data
+net.trainParam.epochs=1;
+e=1;
+
+
+
+
 
 
