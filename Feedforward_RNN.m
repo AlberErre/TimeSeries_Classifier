@@ -85,6 +85,19 @@ number_of_epochs = 30;
 net.trainParam.epochs=1;
 e=1;
 
+while i < number_of_epochs
+    x_stochastic_init_chunk = randperm(size(x,2));
+    % "x_stochastic_init_chunk" makes the Stocastic effect!!
+    % QUITE IMPORTANT - basically it init the data randomly!
+
+    for i=1:number_of_epochs
+        k = x_stochastic_init_chunk(1+mini_batch_size*(i-1) : mini_batch_size*i);
+        [ net tr ] = train(net, x(:,k), t(:,k));
+    end
+    perf(e) = mean(mean(abs(t-net(x))))
+    e=e+1;
+end
+
 
 
 
