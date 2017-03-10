@@ -82,7 +82,7 @@ mini_batch_size = 15;
 number_of_epochs = 30;
     % We have 1,520,606 examples, 
     %if we aproximate to 1,500,000 /15 = 100,000 epochs to feed all data
-net.trainParam.epochs=1;
+dnet.trainParam.epochs=1;
 e=1;
 
 while i < number_of_epochs
@@ -91,14 +91,15 @@ while i < number_of_epochs
     % QUITE IMPORTANT - basically it init the data randomly!
 
     for i=1:number_of_epochs
-        k = x_stochastic_init_chunk(1+mini_batch_size*(i-1) : mini_batch_size*i);
-        [ net tr ] = train(net, x(:,k), t(:,k));
+        k = x_stochastic_init_chunk(1+mini_batch_size*(i-1):mini_batch_size*i);
+        [ dnet tr ] = train(dnet, x(:,k), t(:,k));
     end
-    perf(e) = mean(mean(abs(t-net(x))))
+    perf(e) = mean(mean(abs(t-dnet(x))))
     e=e+1;
 end
 
-
+%plot(perf_batch)
+% try to see the performance
 
 
 
