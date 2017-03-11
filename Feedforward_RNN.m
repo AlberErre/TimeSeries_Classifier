@@ -139,13 +139,45 @@ recurrent_feedforward_performance = perform(recurrent_net,recurrent_test_feedfor
                                                       
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% MODEL ACCURACY
-tind = vec2ind(tt);
-yind = vec2ind(yt);
-percentErrors = sum(tind ~= yind)/numel(tind);
+%% MODELS ACCURACY
+                                                      
+% Direct Feedforward
+                                                      
+dnet_tind = vec2ind(test_results);
+dnet_yind = vec2ind(direct_test_feedforward_prediction);
+dnet_percentErrors = sum(dnet_tind ~= dnet_yind)/numel(dnet_tind);
+accuracy_direct_feedforward = sum(dnet_tind == dnet_yind)/numel(dnet_tind);
+accuracy_direct_feedforward
 
-end
+%c_matrix_direct_feedforward = confusionmat(dnet_yind,dnet_tind);
+figure
+plotconfusion(dnet_tind, dnet_yind);
+                                                      
+% Batch Feedforward
+                                                      
+%net_tind = vec2ind(test_results);
+%net_yind = vec2ind(batch_test_feedforward_prediction);
+%net_percentErrors = sum(net_tind ~= net_yind)/numel(net_tind);
+%Accuracy_batch_feedforward = sum(net_tind == net_yind)/numel(net_tind);
+%Accuracy_batch_feedforward
+                                                      
+%c_matrix_batch_feedfoward = confusionmat(net_yind,net_tind);
+figure
+%plotconfusion(net_tind, net_yind);
+                                                                                                    
+% Recurrent NN
 
+recurrent_tind = vec2ind(test_results);
+recurrent_yind = vec2ind(recurrent_test_feedforward_prediction);
+recurrent_percentErrors = sum(recurrent_tind ~= recurrent_yind)/numel(recurrent_tind);
+Accuracy_recurrentNN = sum(recurrent_tind == recurrent_yind)/numel(recurrent_tind);
+Accuracy_recurrentNN
+                                                      
+%c_matrix_recurrent = confusionmat(recurrent_yind,recurrent_tind);
+figure
+plotconfusion(recurrent_tind, recurrent_yind);
+                                                      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% RECURRENT NN
 
