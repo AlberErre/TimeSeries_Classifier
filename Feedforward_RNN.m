@@ -46,17 +46,23 @@ test_results = dummyvar(tt);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% FEEDFORWARD NN
-
+%% FEEDFORWARD NN (DIRECT) ---> "dnet"
 if ffwd == 1
-x = totalset(:,2:4)';
-t = totalset(:,5)';
-t = dummyvar(t)';
-net = feedforwardnet(10,'sgdm'); %sgdm for stochastic! traingd is gradient decent function, backpropagation
-net = train(net,x,t);
-view(net)
-y = net(x);
-perf = perform(net,y,t)
+
+% SETTING the algorithm with the inputs(x) and classification(t)
+dnet = feedforwardnet(80,'trainscg');
+dnet.trainParam.epochs = 100; % define 100 epochs to train
+
+% TRAINING the algorithm using the x' and results', same result as applying (') directly above
+dnet = train(dnet,x',results');
+view(dnet)
+                                                                             
+% PREDICTING using the feedforward (training data)
+feedforward_prediction = dnet(x');
+direct_feedforward_performance = perform(dnet,feedforward_prediction,results') % performance obtained
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % TEST SET EVALUATION
 xt = testset(:,2:4)';
