@@ -122,13 +122,22 @@ recurrent_performance = perform(recurrent_net,recurrent_net_prediction,results')
 end
            
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                             
+%% TESTING THE ALGORITHMS
 
-% TEST SET EVALUATION
-xt = testset(:,2:4)';
-tt = testset(:,5)';
-tt = dummyvar(tt)';
-yt = net(xt);
-perf_test = perform(net,yt,tt)
+% Direct Feedforward Neural Net (TEST data)
+direct_test_feedforward_prediction = dnet(xt');
+direct_feedforward_performance = perform(dnet,direct_test_feedforward_prediction',test_results')
+
+% Batch Feedforward Neural Net (TEST data)
+%batch_test_feedforward_prediction = net(xt');  % NO IDEA, I need to use [] or something
+%batch_feedforward_performance = perform(net,batch_test_feedforward_prediction',test_results')
+                                  
+% Recurrent Neural Net (TEST data)
+recurrent_test_feedforward_prediction = recurrent_net(xt');
+recurrent_feedforward_performance = perform(recurrent_net,recurrent_test_feedforward_prediction',test_results')
+                                                      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % MODEL ACCURACY
 tind = vec2ind(tt);
