@@ -1,16 +1,18 @@
-%Do a Feedforward Net on the data
+%% MODEL SELECTION
+% Do a Direct Feedforward Net
 ffwd = 1;
-%Do a Recurring Neural  Net
-recn = 0;
+% Do a Recurrent Neural  Net
+recn = 1;
+% Do a Batch Feedforward Net
+batch_ffwd = 0;
 
-
-
+%% DATA PREPROCESSING
 i=15
-totalset =[]
+trainset =[]
 while i>3,
 name = [num2str(i) '.csv'];
 a = csvread(name);
-totalset = [totalset;a]; %dont be stupid STUPID!
+trainset = [trainset;a]; %dont be stupid STUPID!
 i=i-1
 end
 
@@ -25,8 +27,8 @@ i=i-1
 end
 
 % Deleteall Zeroes
-DeleteZero = totalset(:,5) == 0;
-totalset(DeleteZero,:) = [];
+DeleteZero = trainset(:,5) == 0;
+trainset(DeleteZero,:) = [];
 DeleteZero = testset(:,5) == 0;
 testset(DeleteZero,:) = [];
 
