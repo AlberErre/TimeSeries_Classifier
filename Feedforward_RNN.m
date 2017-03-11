@@ -5,6 +5,8 @@ ffwd = 1;
 recn = 1;
 % Do a Batch Feedforward Net
 batch_ffwd = 0;
+% Do a Multi-class classification
+multi == 1;
 
 %% DATA PREPROCESSING
 i=15
@@ -179,6 +181,35 @@ plotconfusion(recurrent_tind, recurrent_yind);
                                                       
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% MULTI-CLASS classification (another algorithm by artur suggestions)
+     
+if multi == 1
+                                                      
+% SETTING the algorithm with the inputs(x) and classification(t)
+multiclass = patternnet(80);
+multiclass.trainParam.epochs = 100; % define 100 epochs to train
+                                                      
+% TRAINING the algorithm using the x' and results', same result as applying (') directly above
+multiclass = train(multiclass,x',results');
+view(multiclass)
+                      
+% PREDICTING using multi-class (training data)
+multiclass_prediction = multiclass(x');
+multiclass_performance = perform(multiclass,multiclass_prediction,results') % performance obtained
+                                                                                                                                                 
+% PREDICTING using multi-class (TEST data)
+multiclass_test_prediction = multiclass(xt');
+multiclass_test_performance = perform(multiclass,multiclass_test_prediction,test_results')
+
+% ACCURACY
+multi_tind = vec2ind(test_results);
+multi_yind = vec2ind(multiclass_prediction);
+multi_percentErrors = sum(multi_tind ~= multi_yind)/numel(multi_tind);
+accuracy_multi_class = sum(multi_tind == multi_yind)/numel(multi_tind);
+accuracy_multi_class
+                                 
+end
+              
 
 
 
