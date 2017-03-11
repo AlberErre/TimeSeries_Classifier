@@ -100,6 +100,29 @@ end
                                   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% RECURRENT NN
+                             
+if recn == 1
+                            
+% SETTING the algorithm with the inputs(x) and classification(t)
+recurrent_net = layrecnet(1:10,10,'traingd'); %1:2 is the delay ; traingd is gradient decent function, backpropagation
+          
+% [Xs,Xi,Ai,Ts] = recurrent_net(recurrent_net,x',results');
+% check: https://es.mathworks.com/help/nnet/ref/layrecnet.html
+                             
+% TRAINING the algorithm using the x' and results', same result as applying (') directly above
+% coutputlayer = classificationLayer('Name','coutput') % WHAT is this??
+recurrent_net = train(recurrent_net,x',results');
+view(recurrent_net)
+                                                                                         
+% PREDICTING using Recurrent Neural Net (training data)
+recurrent_net_prediction = recurrent_net(x'); % it should be 100% because it's using training data
+recurrent_performance = perform(recurrent_net,recurrent_net_prediction,results')
+
+end
+           
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % TEST SET EVALUATION
 xt = testset(:,2:4)';
 tt = testset(:,5)';
