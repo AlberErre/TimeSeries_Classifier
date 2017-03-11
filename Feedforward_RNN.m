@@ -32,6 +32,20 @@ trainset(DeleteZero,:) = [];
 DeleteZero = testset(:,5) == 0;
 testset(DeleteZero,:) = [];
 
+%% INPUTS AND OUTPUTS
+
+% TRAIN DATA
+x = trainset(:,2:4);
+t = trainset(:,5);
+results = dummyvar(t);
+
+% TEST DATA
+xt = testset(:,2:4);
+tt = testset(:,5);
+test_results = dummyvar(tt);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% FEEDFORWARD NN
 
 if ffwd == 1
