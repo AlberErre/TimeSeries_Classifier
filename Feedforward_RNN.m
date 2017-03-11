@@ -64,6 +64,42 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% FEEDFORWARD NN (MINI BATCH) ---> "net"
+if batch_ffwd == 1
+                            
+% SETTING the algorithm with the inputs(x) and classification(t)
+net = feedforwardnet(10,'trainscg'); %sgdm for stochastic! traingd is gradient decent function, backpropagation
+mini_batch_size = 15; 
+    % The "window" takes 15 inputs to train the net in every epoch
+number_of_epochs = 100;
+    % We have 1,520,606 examples, 
+    %if we aproximate to 1,500,000 /15 = 100,000 epochs to feed all data
+net.trainParam.epochs=1;
+e=1;
+
+% TRAINING the algorithm using the loop for batching
+while i < number_of_epochs
+    x_stochastic_init_chunk = randperm(size(x',2));
+    % "x_stochastic_init_chunk" makes the Stocastic effect!!
+    % QUITE IMPORTANT - basically it init the data randomly!
+
+    for i=1:number_of_epochs % TRAINING
+        k = x_stochastic_init_chunk(1+mini_batch_size*(i-1) : mini_batch_size*i);
+        [net tr] = train(net, x(:,k)', results(:,k)'); % [] to save all trainings
+    end
+    %perf = perform(net,feedforward_prediction,results') % performance obtained
+    perf(e) = mean(mean(abs(t-net(x'))))
+    e=e+1;
+end
+
+% PREDICTING using the BATCH feedforward (training data)
+%batch_feedforward_prediction = net(x'); % NO IDEA HOW TO IMPLEMENT IT, do I need to use []?
+%batch_feedforward_performance = perform(net,batch_feedforward_prediction,results') % performance obtained
+                                                                                
+end
+                                  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % TEST SET EVALUATION
 xt = testset(:,2:4)';
 tt = testset(:,5)';
