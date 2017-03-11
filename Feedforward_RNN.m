@@ -179,49 +179,7 @@ plotconfusion(recurrent_tind, recurrent_yind);
                                                       
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% RECURRENT NN
 
-if recn == 1
-x = totalset(:,2:4)';
-t = totalset(:,5)';
-t = dummyvar(t)';
-net = layrecnet(1:10,10,'traingd'); %1:2 is the delay ; traingd is gradient decent function, backpropagation
-
-% we are missing this line 
-%[Xs,Xi,Ai,Ts] = preparets(net,x,t);
-% check: https://es.mathworks.com/help/nnet/ref/layrecnet.html
-coutputlayer = classificationLayer('Name','coutput')
-net = train(net,x,t);
-view(net)
-y = net(x);
-perf = perform(net,y,t)
-end
-
-%% FEEDFORWARD NN (MINI BATCH) ---> "dnet"
-dnet = feedforwardnet(10,'trainscg'); %sgdm for stochastic! traingd is gradient decent function, backpropagation
-mini_batch_size = 15; 
-    % The "window" takes 15 inputs to train the net in every epoch
-number_of_epochs = 30;
-    % We have 1,520,606 examples, 
-    %if we aproximate to 1,500,000 /15 = 100,000 epochs to feed all data
-dnet.trainParam.epochs=1;
-e=1;
-
-while i < number_of_epochs
-    x_stochastic_init_chunk = randperm(size(x,2));
-    % "x_stochastic_init_chunk" makes the Stocastic effect!!
-    % QUITE IMPORTANT - basically it init the data randomly!
-
-    for i=1:number_of_epochs
-        k = x_stochastic_init_chunk(1+mini_batch_size*(i-1):mini_batch_size*i);
-        [ dnet tr ] = train(dnet, x(:,k), t(:,k));
-    end
-    perf(e) = mean(mean(abs(t-dnet(x))))
-    e=e+1;
-end
-
-%plot(perf_batch)
-% try to see the performance
 
 
 
