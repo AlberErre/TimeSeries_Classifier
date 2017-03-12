@@ -23,14 +23,14 @@ trainset = [trainset;a];
 %% INPUTS AND OUTPUTS
 
 % TRAIN DATA
-x = trainset(:,2:4);
-t = trainset(:,5);
-results = dummyvar(t);
+x = trainset(:,2:7);
+t = trainset(:,8); % now we have 5 categories
+results = (dummyvar(t))';
 
 % TEST DATA
-xt = testset(:,2:4);
-tt = testset(:,5);
-test_results = dummyvar(tt);
+xt = testset(:,2:7);
+tt = testset(:,8); % now we have 5 categories
+results_test = (dummyvar(tt))';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
