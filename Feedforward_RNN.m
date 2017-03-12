@@ -8,31 +8,17 @@ batch_ffwd = 0;
 % Do a Multi-class classification
 multi == 1;
 
-%% DATA PREPROCESSING
-i=15
-trainset =[]
-while i>3,
-name = [num2str(i) '.csv'];
-a = csvread(name);
-trainset = [trainset;a]; %dont be stupid STUPID!
-i=i-1
-end
+%% DATA PREPROCESSING (NEW data)
 
-a=0
-i=3
-testset =[]
-while i>0,
-name = [num2str(i) '.csv'];
+testset = []
+name = ['train_data_6inputs.csv'];
 a = csvread(name);
-testset = [testset;a]; %dont be stupid STUPID!
-i=i-1
-end
+testset = [testset;a];
 
-% Deleteall Zeroes
-DeleteZero = trainset(:,5) == 0;
-trainset(DeleteZero,:) = [];
-DeleteZero = testset(:,5) == 0;
-testset(DeleteZero,:) = [];
+trainset = []
+name = ['new_data_mcdos.csv'];
+a = csvread(name);
+trainset = [trainset;a];
 
 %% INPUTS AND OUTPUTS
 
