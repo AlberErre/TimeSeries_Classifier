@@ -8,5 +8,5 @@ Matlab
 ## Code: 
 https://github.com/AlberErre/TimeSeries_Classifier/blob/master/Feedforward_RNN.m
 ## Dataset: 
-https://archive.ics.uci.edu/ml/datasets/Activity+Recognition+from+Single+Chest-Mounted+Accelerometer
+https://archive.ics.uci.edu/ml/datasets/Activity+Recognition+system+based+on+Multisensor+data+fusion+%28AReM%29
 
