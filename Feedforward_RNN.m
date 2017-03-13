@@ -37,9 +37,25 @@ results_test = (dummyvar(tt))';
 %% FEEDFORWARD NN (DIRECT) ---> "dnet"
 if ffwd == 1
 
-% SETTING the algorithm with the inputs(x) and classification(t)
-dnet = feedforwardnet(80,'trainscg');
-dnet.trainParam.epochs = 100; % define 100 epochs to train
+% NETWORK PARAMETERS
+number_hidden_nodes = 21 % 21 is good!
+training_method = 'trainlm' % 'trainlm' provide the best results!! (default)
+    % In the report, comment the difference in efficient between gradient
+    % descent (traingd, traingdm and traingdx) and Levenberg-Marquardt
+    % (trainlm). gradient descent is slow in TIME, needs a lot of epochs
+    % and have bad accuracy respect 'trainlm'. Ww must say it in the report
+    % :D
+dnet = feedforwardnet(number_hidden_nodes,training_method);
+dnet = configure(dnet,z,results);
+dnet.numInputs = 6
+dnet.inputConnect = [1 1 1 1 1 1; 0 0 0 0 0 0]
+dnet.divideFcn = 'dividerand' % the way we divide the data!
+dnet.divideParam.trainRatio = 80/100;
+dnet.divideParam.valRatio = 10/100;
+dnet.divideParam.testRatio = 10/100;
+dnet.trainParam.max_fail = 100 % avoid stop training because of fail validation
+dnet.trainParam.epochs = 10; % define number of epochs to train
+                              % 60 epochs are enough for us!!
 
 % TRAINING the algorithm using the x' and results', same result as applying (') directly above
 dnet = train(dnet,x',results');
