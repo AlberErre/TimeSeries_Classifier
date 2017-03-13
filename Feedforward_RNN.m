@@ -68,9 +68,10 @@ dnet.trainParam.max_fail = 100 % avoid stop training because of fail validation
 dnet.trainParam.epochs = 10; % define number of epochs to train
                               % 60 epochs are enough for us!!
 
-% TRAINING the algorithm using the x' and results', same result as applying (') directly above
-dnet = train(dnet,x',results');
-view(dnet)
+% TRAINING 
+[dnet, tr] = train(dnet,z',results); view(dnet)
+plotperform(tr) % this plots the performance in every iteration
+%plottrainstate(tr)% display the training states values
                                                                              
 % PREDICTING using the feedforward (training data)
 feedforward_prediction = dnet(x');
