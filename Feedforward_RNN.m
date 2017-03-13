@@ -99,6 +99,17 @@ x6_test = testset(:,7)';
 
 z_test = {x1_test, x2_test, x3_test, x4_test, x5_test, x6_test};
 
+% predicting (test data)
+TEST_feedforward_prediction = cell2mat(dnet(z_test'));
+TEST_dnet_test = (vec2ind(results_test))';
+TEST_dnet_predict = (vec2ind(TEST_feedforward_prediction))';
+% Calculating accuracy (test set)
+TEST_ACCURACY_feedforward = sum(TEST_dnet_predict == TEST_dnet_test)/length(TEST_dnet_test)*100;
+TEST_ACCURACY_feedforward
+TEST_ConfusionMat_dnet = confusionmat(TEST_dnet_test, TEST_dnet_predict);
+TEST_ConfusionMat_dnet
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FEEDFORWARD NN (MINI BATCH) ---> "net"
 if batch_ffwd == 1
                             
