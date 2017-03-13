@@ -72,11 +72,19 @@ dnet.trainParam.epochs = 10; % define number of epochs to train
 [dnet, tr] = train(dnet,z',results); view(dnet)
 plotperform(tr) % this plots the performance in every iteration
 %plottrainstate(tr)% display the training states values
-                                                                             
-% PREDICTING using the feedforward (training data)
-feedforward_prediction = dnet(x');
-direct_feedforward_performance = perform(dnet,feedforward_prediction,results') % performance obtained
-end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TRAIN DATA (accuracy)
+
+% predicting (train data)
+feedforward_prediction = cell2mat(dnet(z'));
+dnet_test = (vec2ind(results))';
+dnet_predict = (vec2ind(feedforward_prediction))';
+% Calculating accuracy (train set)
+ACCURACY_feedforward = sum(dnet_predict == dnet_test)/length(dnet_test)*100;
+ACCURACY_feedforward
+ConfusionMat_dnet = confusionmat(dnet_test, dnet_predict);
+ConfusionMat_dnet
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
