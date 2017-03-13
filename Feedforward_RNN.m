@@ -87,6 +87,17 @@ ConfusionMat_dnet = confusionmat(dnet_test, dnet_predict);
 ConfusionMat_dnet
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TEST DATA (accuracy)
+
+% Using an independent entry for each input to increase accuracy
+x1_test = testset(:,2)';
+x2_test = testset(:,3)';
+x3_test = testset(:,4)';
+x4_test = testset(:,5)';
+x5_test = testset(:,6)';
+x6_test = testset(:,7)';
+
+z_test = {x1_test, x2_test, x3_test, x4_test, x5_test, x6_test};
 
 %% FEEDFORWARD NN (MINI BATCH) ---> "net"
 if batch_ffwd == 1
