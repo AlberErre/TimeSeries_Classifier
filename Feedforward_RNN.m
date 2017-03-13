@@ -33,7 +33,18 @@ tt = testset(:,8); % now we have 5 categories
 results_test = (dummyvar(tt))';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREPARE INPUTS 
+% Using an independent entry for each input to increase accuracy
+x1 = trainset(:,2)';
+x2 = trainset(:,3)';
+x3 = trainset(:,4)';
+x4 = trainset(:,5)';
+x5 = trainset(:,6)';
+x6 = trainset(:,7)';
 
+z = {x1, x2, x3, x4, x5, x6};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% FEEDFORWARD NN (DIRECT) ---> "dnet"
 if ffwd == 1
 
