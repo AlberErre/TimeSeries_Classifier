@@ -57,17 +57,17 @@ training_method = 'trainlm' % 'trainlm' provide the best results!! (default)
     % and have bad accuracy respect 'trainlm'. Ww must say it in the report
     % :D
 dnet = feedforwardnet(number_hidden_nodes,training_method);
-dnet = configure(dnet,z,results);
 dnet.numInputs = 6
 dnet.inputConnect = [1 1 1 1 1 1; 0 0 0 0 0 0]
-dnet.divideFcn = 'dividerand' % the way we divide the data!
-dnet.divideParam.trainRatio = 80/100;
-dnet.divideParam.valRatio = 10/100;
-dnet.divideParam.testRatio = 10/100;
-dnet.trainParam.max_fail = 100 % avoid stop training because of fail validation
-dnet.trainParam.epochs = 10; % define number of epochs to train
-                              % 60 epochs are enough for us!!
-
+dnet.divideFcn = 'dividerand' % the way we divide the data! (randomly)
+dnet.layers{1}.transferFcn = 'elliotsig'; % tansig softmax satlins - elliotsig --> this is the best (activation function) 
+dnet.layers{2}.transferFcn = 'elliotsig'; % tansig softmax satlins elliotsig
+dnet.divideParam.trainRatio = 90/100; %90/100 is perfect!
+dnet.divideParam.valRatio = 5/100;
+dnet.divideParam.testRatio = 5/100;
+dnet.trainParam.max_fail = 1000 % avoid stop training because of failed validation
+dnet.trainParam.epochs = 200; % define number of epochs to train
+                              % 50 epochs are enough for us to reach 
 % TRAINING 
 [dnet, tr] = train(dnet,z',results); view(dnet)
 plotperform(tr) % this plots the performance in every iteration
