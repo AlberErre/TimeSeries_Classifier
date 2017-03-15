@@ -109,26 +109,77 @@ TEST_ACCURACY_feedforward
 TEST_ConfusionMat_dnet = confusionmat(TEST_dnet_test, TEST_dnet_predict);
 TEST_ConfusionMat_dnet
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                 
 %% RECURRENT NN
                              
 if recn == 1
-                            
-% SETTING the algorithm with the inputs(x) and classification(t)
-recurrent_net = layrecnet(1:10,10,'traingd'); %1:2 is the delay ; traingd is gradient decent function, backpropagation
-          
-% [Xs,Xi,Ai,Ts] = recurrent_net(recurrent_net,x',results');
-% check: https://es.mathworks.com/help/nnet/ref/layrecnet.html
-                             
-% TRAINING the algorithm using the x' and results', same result as applying (') directly above
-% coutputlayer = classificationLayer('Name','coutput') % WHAT is this??
-recurrent_net = train(recurrent_net,x',results');
-view(recurrent_net)
-                                                                                         
-% PREDICTING using Recurrent Neural Net (training data)
-recurrent_net_prediction = recurrent_net(x'); % it should be 100% because it's using training data
-recurrent_performance = perform(recurrent_net,recurrent_net_prediction,results')
+
+% NETWORK PARAMETERS
+number_hidden_nodes = 21 % 21 is good!
+training_method = 'trainlm' % 'trainlm' provide the best results!! (default)
+    % In the report, comment the difference in efficient between gradient
+    % descent (traingd, traingdm and traingdx) and Levenberg-Marquardt
+    % (trainlm). gradient descent is slow in TIME, needs a lot of epochs
+    % and have bad accuracy respect 'trainlm'. Ww must say it in the report
+    % :D
+rnet = layrecnet(1:3,number_hidden_nodes,training_method);
+               % 1:3 give us 88%
+rnet.numInputs = 6;
+rnet.inputConnect = [1 1 1 1 1 1; 0 0 0 0 0 0]
+rnet. layerConnect = [1 0; 1 0]
+rnet.divideFcn = 'dividerand'; % the way we divide the data!
+rnet.layers{1}.transferFcn = 'elliotsig'; % tansig softmax satlins elliotsig --> this is the best (activation function) 
+rnet.layers{2}.transferFcn = 'elliotsig';
+rnet.divideParam.trainRatio = 90/100;
+rnet.divideParam.valRatio = 5/100;
+rnet.divideParam.testRatio = 5/100;
+rnet.trainParam.max_fail = 100; % avoid stop training because of fail validation
+rnet.trainParam.epochs = 20; % define number of epochs to train
+                              % 60 epochs are enough for us!!
+
+% TRAINING 
+%[Xs,Xi,Ai,Ts] = preparets(rnet,cell2mat(z'),results');
+[rnet r_tr] = train(rnet,z',results); view(rnet);
+%[rnet, r_tr] = train(rnet,z',results); view(rnet)
+plotperform(r_tr) % this plots the performance in every iteration
+%plottrainstate(tr)% display the training states values
 
 end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TRAIN DATA (Recurrent NN accuracy)
+
+% predicting (train data)
+recurrent_prediction = cell2mat(rnet(z'));
+rnet_test = (vec2ind(results))';
+rnet_predict = (vec2ind(recurrent_prediction))';
+% Calculating accuracy (train set)
+ACCURACY_recurrent = sum(rnet_predict == rnet_test)/length(rnet_test)*100;
+ACCURACY_recurrent
+ConfusionMat_rnet = confusionmat(rnet_test, rnet_predict);
+ConfusionMat_rnet
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TEST DATA (Recurrent NN accuracy)
+
+% Using an independent entry for each input to increase accuracy
+x1_test = testset(:,2)';
+x2_test = testset(:,3)';
+x3_test = testset(:,4)';
+x4_test = testset(:,5)';
+x5_test = testset(:,6)';
+x6_test = testset(:,7)';
+
+z_test = {x1_test, x2_test, x3_test, x4_test, x5_test, x6_test};
+
+% predicting (test data)
+TEST_recurrent_prediction = cell2mat(rnet(z_test'));
+TEST_rnet_test = (vec2ind(results_test))';
+TEST_rnet_predict = (vec2ind(TEST_recurrent_prediction))';
+% Calculating accuracy (test set)
+TEST_ACCURACY_recurrent = sum(TEST_rnet_predict == TEST_rnet_test)/length(TEST_rnet_test)*100;
+TEST_ACCURACY_recurrent
+TEST_ConfusionMat_rnet = confusionmat(TEST_rnet_test, TEST_rnet_predict);
+TEST_ConfusionMat_rnet
 
 
 
