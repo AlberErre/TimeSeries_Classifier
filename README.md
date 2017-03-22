@@ -1,7 +1,7 @@
 # TimeSeries_Classifier
-Classify Time-series/Sequential data using Neural Nets and SVM
+### Classify Time-series/Sequential data using Neural Nets and SVM
 
-#### Comparison while classifying time-series patterns using Feedforward nets (with Recurrent Neural Net extension) and Support Vector Machine algorithm
+Comparison while classifying time-series patterns using Feedforward nets (with Recurrent Neural Net extension) and Support Vector Machine algorithm
 
 ## Language: 
 Matlab
