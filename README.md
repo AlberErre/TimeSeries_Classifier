@@ -8,7 +8,7 @@ Matlab
 
 # Code: 
 ## Neural nets (Feedforward with RNN extension):
-https://github.com/AlberErre/TimeSeries_Classifier/blob/master/Feedforward_RNN.m
+https://github.com/AlberErre/TimeSeries_Classifier/blob/master/Feedforward_with_RNN_extension.m
 ## Support Vector Machine (SVM)
 https://github.com/AlberErre/TimeSeries_Classifier/blob/master/SupportVectorMachine_TS.m
 
