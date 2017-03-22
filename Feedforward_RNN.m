@@ -3,10 +3,6 @@
 ffwd = 1;
 % Do a Recurrent Neural  Net
 recn = 1;
-% Do a Batch Feedforward Net
-batch_ffwd = 0;
-% Do a Multi-class classification
-multi == 1;
 
 %% DATA PREPROCESSING (NEW data)
 
